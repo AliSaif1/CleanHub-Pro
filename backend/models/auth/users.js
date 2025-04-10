@@ -7,7 +7,6 @@ export const userValidationSchema = Joi.object({
   email: Joi.string().email().required(),
   role: Joi.string().valid('admin', 'employee', 'customer').required(),
   password: Joi.string().min(6).required(),
-  createdAt: Joi.date().optional(),
 });
 
 // Mongoose schema
@@ -16,7 +15,6 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true },
   role: { type: String, enum: ['admin', 'employee', 'customer'], default: 'customer', required: true },
   password: { type: String, required: true, minlength: 6 },
-  createdAt: { type: Date, default: Date.now }
 });
 
 // Pre-save hook with Joi validation
@@ -27,7 +25,6 @@ userSchema.pre('save', async function (next) {
       email: this.email,
       role: this.role,
       password: this.password,
-      createdAt: this.createdAt,
     };
 
     const { error } = userValidationSchema.validate(userData);

@@ -1,10 +1,8 @@
 import { Router } from 'express'; 
+import adminRouter from './admin/adminRouters.js';
 
 const branchRouter = Router();
 
-// Define routes here, for example:
-branchRouter.get('/', (req, res) => {
-  res.send('Branch endpoint is working!');
-});
+branchRouter.use('/admin', adminRouter);
 
 export default branchRouter;
